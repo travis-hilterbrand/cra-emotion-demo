@@ -1,19 +1,26 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { ThemeProvider } from 'emotion-theming';
+import { ThemeProvider, useTheme } from 'emotion-theming';
 
-const theme = {
+const InnerTheme = {
   padding: {
     standard: 32,
   },
+  accentColor: 'hotpink',
   colors: {
     primary: 'hotpink',
   },
 };
 
+const Child = () => {
+  const theme = useTheme();
+  console.log('theme', theme);
+  return <div css={{ padding: theme.padding.standard, color: theme.accentColor }}>Themed component</div>;
+};
+
 const ThemedComponent = () => (
-  <ThemeProvider theme={theme}>
-    <div css={(theme) => ({ padding: theme.padding.standard, color: theme.colors.primary })}>Hover to change color</div>
+  <ThemeProvider theme={InnerTheme}>
+    <Child />
   </ThemeProvider>
 );
 
